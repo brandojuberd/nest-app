@@ -51,13 +51,10 @@ jobs:
 
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
-    
-    - name: Set GCP Project
+  
+    - name: Deploy to GCE
       run: |-
         gcloud config set project $PROJECT_ID
-
-    - name: Connect to VM
-      run: |-
         gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m --command="ls"
     # # Build the Docker image
     # - name: Build
