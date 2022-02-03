@@ -55,7 +55,7 @@ jobs:
     - name: Deploy to GCE
       run: |-
         gcloud config set project $PROJECT_ID
-        gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m --command="ls"
+        gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m --command="touch test.js && ls"
     # # Build the Docker image
     # - name: Build
     #   run: |-
