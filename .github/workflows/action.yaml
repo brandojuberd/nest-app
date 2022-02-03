@@ -58,8 +58,7 @@ jobs:
 
     - name: Connect to VM
       run: |-
-        gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m
-        pm2 logs
+        gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m --command="pm2 logs"
     # # Build the Docker image
     # - name: Build
     #   run: |-
