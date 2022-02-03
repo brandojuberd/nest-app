@@ -58,7 +58,7 @@ jobs:
 
     - name: Connect to VM
       run: |-
-        gcloud compute ssh GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE
+        gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE
     # # Build the Docker image
     # - name: Build
     #   run: |-
