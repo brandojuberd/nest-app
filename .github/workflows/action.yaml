@@ -51,8 +51,10 @@ jobs:
 
     # Configure Docker to use the gcloud command-line tool as a credential
     # helper for authentication
-    - run: |-
-        gcloud info
+    
+    - name: Set GCP Project
+      run: |-
+        gcloud config set project $PROJECT_ID
 
     # # Build the Docker image
     # - name: Build
