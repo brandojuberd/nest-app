@@ -58,7 +58,7 @@ jobs:
 
     - name: Connect to VM
       run: |-
-        gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m --command="gcloud compute ssh instance-1 --zone=us-west4-a --ssh-key-expire-after=5m -- 'cd nest-app && git pull && pm2 start --name nest-app npm -- run start:prod'
+        gcloud compute ssh $GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m -- "cd nest-app && git pull && pm2 start --name nest-app npm -- run start:prod"
     # # Build the Docker image
     # - name: Build
     #   run: |-
