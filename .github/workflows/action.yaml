@@ -56,6 +56,9 @@ jobs:
       run: |-
         gcloud config set project $PROJECT_ID
 
+    - name: Connect to VM
+      run: |-
+        gcloud compute ssh GCE_INSTANCE
     # # Build the Docker image
     # - name: Build
     #   run: |-
