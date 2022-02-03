@@ -21,8 +21,8 @@ on:
 
 env:
   PROJECT_ID: ${{ secrets.GCE_PROJECT }}
-  GCE_INSTANCE: my-githubactions-vm  # TODO: update to instance name
-  GCE_INSTANCE_ZONE: us-central1-a   # TODO: update to instance zone
+  GCE_INSTANCE: instance-1
+  GCE_INSTANCE_ZONE: us-west4-a  
 
 jobs:
   setup-build-publish-deploy:
@@ -43,7 +43,7 @@ jobs:
       name: 'Authenticate to Google Cloud'
       uses: 'google-github-actions/auth@v0'
       with:
-        credentials_json: ${{GCE_SA_KEY}}
+        credentials_json: ${{ secrets.GCE_SA_KEY }}
 
     # Alternative option - authentication via credentials json
     # - id: 'auth'
