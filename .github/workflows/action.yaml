@@ -16,13 +16,15 @@ name: Build and Deploy to Google Compute Engine
 
 on:
   push:
-    branches:
-    - main
+    # branches:
+    # - main
+    paths:
+      - src/**
 
 env:
-  PROJECT_ID: ${{ secrets.GCE_PROJECT }}
-  GCE_INSTANCE: instance-1
-  GCE_INSTANCE_ZONE: us-west4-a  
+  # PROJECT_ID: ${{ secrets.GCE_PROJECT }}
+  # GCE_INSTANCE: instance-1
+  # GCE_INSTANCE_ZONE: us-west4-a  
 
 jobs:
   setup-build-publish-deploy:
@@ -30,35 +32,41 @@ jobs:
     runs-on: ubuntu-latest
 
     # Add "id-token" with the intended permissions.
-    permissions:
-      contents: 'read'
-      id-token: 'write'
+    # permissions:
+    #   contents: 'read'
+    #   id-token: 'write'
 
     steps:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Configure Workload Identity Federation and generate an access token.
-    - id: 'auth'
-      name: 'Authenticate to Google Cloud'
-      uses: 'google-github-actions/auth@v0'
-      with:
-        credentials_json: ${{ secrets.GCE_SA_KEY }}
-
-    # Setup gcloud CLI
-    - name: Set up Cloud SDK
-      uses: google-github-actions/setup-gcloud@v0
-
-    # Configure Docker to use the gcloud command-line tool as a credential
-    # helper for authentication
+    - name: Install package (require packag-lock.json)
+      run: npm ci
     
-    - name: Set GCP Project
-      run: |-
-        gcloud config set project $PROJECT_ID
+    - name: Run Test
+      run: npm run test
 
-    - name: Connect to VM
-      run: |-
-        gcloud compute ssh brandojuberd@$GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m --command="cd nest-app && git pull && npm run build && pm2 reload nest-app"
+    # # Configure Workload Identity Federation and generate an access token.
+    # - id: 'auth'
+    #   name: 'Authenticate to Google Cloud'
+    #   uses: 'google-github-actions/auth@v0'
+    #   with:
+    #     credentials_json: ${{ secrets.GCE_SA_KEY }}
+
+    # # Setup gcloud CLI
+    # - name: Set up Cloud SDK
+    #   uses: google-github-actions/setup-gcloud@v0
+
+    # # Configure Docker to use the gcloud command-line tool as a credential
+    # # helper for authentication
+    
+    # - name: Set GCP Project
+    #   run: |-
+    #     gcloud config set project $PROJECT_ID
+
+    # - name: Connect to VM
+    #   run: |-
+    #     gcloud compute ssh brandojuberd@$GCE_INSTANCE --zone=$GCE_INSTANCE_ZONE --ssh-key-expire-after=5m --command="cd nest-app && git pull && npm run build && pm2 reload nest-app"
     # # Build the Docker image
     # - name: Build
     #   run: |-
